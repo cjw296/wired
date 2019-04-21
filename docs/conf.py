@@ -62,7 +62,7 @@ master_doc = 'docs'
 
 # General information about the project.
 project = u'wired'
-copyright = u'2018, Michael Merickel'
+copyright = u'2019, Michael Merickel'
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
