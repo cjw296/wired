@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Homepage | wired</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/themes/github.min.css">
+    <style>
+        .hero-body a {
+            text-decoration: underline;
+        }
+
+        .hero-body a :hover {
+            background-color: lightgray;
+        }
+        .code-samples pre code {
+            font-size: smaller;
+        }
+    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+<nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="https://wired.readthedocs.io/">
+                wired
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+
+                <a class="navbar-item" href="/docs.html">
+                    Documentation
+                </a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button" href="https://github.com/mmerickel/wired">
+                        <span class="icon">
+                          <i class="fab fa-github"></i>
+                        </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<section class="hero is-light is-medium">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title">
+                Composable Python Applications with <code style="font-size: inherit">wired</code>
+            </h1>
+            <h2 class="subtitle">
+                Inversion of Control (IoC) and Dependency Injection (DI) are popular patterns
+                for maintainable applications. <code style="font-size: inherit">wired</code> is a
+                <a class="is-link" href="#scalable">scalable</a> Python library
+                for building
+                <a href="#decoupled">decoupled</a>,
+                <a href="#extensible">extensible</a>,
+                <a href="#configurable">configurable</a>,
+                <a href="#pluggable">pluggable</a> applications.
+            </h2>
+            <div class="container code-samples">
+                <div class="columns">
+                    <div class="column">
+                        <h2 class="has-text-grey">Make some entity</h2>
+                        <div>
+                <pre><code data-language="python">class Greeter:
+    def __init__(self, greeting):
+        self.greeting = greeting
+
+    def __call__(self):
+        return f'{self.greeting} !!'</code></pre>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h2 class="has-text-grey">Register it</h2>
+                        <div>
+                <pre><code data-language="python">registry = ServiceRegistry()
+
+# Greeters are nice...they greet people!
+greeter = Greeter(greeting='Hello')
+
+# Register it as a singleton using its class for the "key"
+registry.register_singleton(greeter, Greeter)</code></pre>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h2 class="has-text-grey">Make a callable that uses it</h2>
+                        <div>
+                <pre><code data-language="python">def greet_a_customer(container):
+
+    # Get the registered greeter, do the greeting
+    the_greeter = container.get(Greeter)
+    greeting = the_greeter()
+
+    return greeting</code></pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-offset-3 is-6">
+                        <h2 class="has-text-grey">Then use it in an operation</h2>
+                        <div>
+                <pre><code data-language="python"># A customer comes in, handle the steps in the greeting process
+# as a "container".
+container = registry.create_container()
+greeting = greet_a_customer(container)
+
+# The "request" was handled, return it
+print(greeting)</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="hero is-dark">
+    <a id="scalable"></a>
+    <div class="hero-body">
+        <div class="columns">
+            <div class="column is-offset-1 is-4">
+                <h1 class="title">Scalable</h1>
+                <h2 class="subtitle">Scale down to "hello world", up to large systems</h2>
+            </div>
+            <div class="column is-6 content">
+                <p>Other libraries usually turn into frameworks which turn into
+                monoliths. <code>wired</code> is a good fit for even small applications,
+                    but shines as you scale.</p>
+                <ul>
+                    <li>One dependency, which itself has one dependency</li>
+                    <li>Core <code>wired</code> is very small</li>
+                    <li>Lets you build custom apps atop it</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="hero">
+    <a id="decoupled"></a>
+    <div class="hero-body">
+        <div class="columns">
+            <div class="column is-offset-1 is-4 content">
+                <p>Tired of passing the universe around? <code>wired</code> makes it easy for the
+                callee to decide what pieces it wants from the caller.</p>
+                <ul>
+                    <li>Ideal for writing in-house frameworks with pluggable pieces</li>
+                    <li>Easy to write tests by replacing the the parts used by tested code</li>
+                </ul>
+            </div>
+            <div class="column is-offset-1 is-4">
+                <h1 class="title">Decoupled</h1>
+                <h2 class="subtitle">Keep your app's core and code written for it at arm's length.</h2>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="hero is-light">
+    <a id="extensible"></a>
+    <div class="hero-body">
+        <div class="columns">
+            <div class="column is-offset-1 is-one-third">
+                <h1 class="title">Extensible</h1>
+            </div>
+            <div class="column content">
+                Second column
+            </div>
+        </div>
+    </div>
+</section>
+<section class="hero">
+    <a id="configurable"></a>
+    <div class="hero-body">
+        <div class="columns">
+            <div class="column is-offset-1 content">
+                Second column
+            </div>
+            <div class="column is-offset-2 is-one-third">
+                <h1 class="title">Configurable</h1>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="hero is-dark">
+    <a id="pluggable"></a>
+    <div class="hero-body">
+        <div class="columns">
+            <div class="column is-offset-1 is-one-third">
+                <h1 class="title">Pluggable</h1>
+            </div>
+            <div class="column content">
+                Second column
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            © Copyright 2019, Michael Merickel
+        </p>
+    </div>
+</footer>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/rainbow.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/generic.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/python.min.js"></script>
+</body>
+</html>
